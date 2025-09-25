@@ -27,8 +27,8 @@ class CategorySeeder extends Seeder
 
 
         Category::factory()->create([
-            'name' => 'Object oriented',
-            'slug' => 'object-oriented',
+            'name' => 'algoritma pemrograman',
+            'slug' => 'algoritma pemrograman',
             'color' => 'bg-amber-600'
         ]);
     }
