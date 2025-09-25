@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostDashboardController extends Controller
 {
@@ -11,7 +12,7 @@ class PostDashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        return view('dashboard', ['posts' => Post::latest()->paginate(17)]);
     }
 
     /**
