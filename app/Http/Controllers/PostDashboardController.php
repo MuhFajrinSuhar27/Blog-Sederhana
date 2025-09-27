@@ -19,7 +19,7 @@ class PostDashboardController extends Controller
             $posts->where('title', 'like', '%' . request('keyword') . '%' );
         }
 
-        return view('author.index', ['posts' => $posts->paginate(5)]);
+        return view('author.index', ['posts' => $posts->paginate(5)->withQueryString()]);
     }
 
     /**
@@ -51,7 +51,7 @@ class PostDashboardController extends Controller
      */
     public function edit(string $id)
     {
-        //
+                
     }
 
     /**
