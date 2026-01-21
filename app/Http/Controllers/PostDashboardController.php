@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostDashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $posts = Post::latest()->where('author_id', Auth::user()->id);
@@ -36,6 +34,15 @@ class PostDashboardController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+
+            'title' => 'required',
+            'category_id' => 'required',
+            'body' => 'required|min:4|max:255'
+        ]);
+      
+
         Post::create([
             'title' => $request->title,
             'author_id' => Auth::user()->id,

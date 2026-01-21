@@ -13,11 +13,8 @@ Route::get('/', function () {
 Route::get('/posts', function () {
     $posts = Post::latest()->filter(request(['search', 'category', 'author']))->simplePaginate(16)->withQueryString();
 
-
     return view('posts', ['title' => 'Posts', 'posts' => $posts]);
 });
-
-
 
 Route::get('/posts/{post:slug}', function (Post $post) {
     return view('post', ['title' => 'Single Post', 'post' => $post]);
@@ -58,13 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/dashboard', [PostDashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard/create', [PostDashboardController::class, 'create'])->middleware(['auth', 'verified'])->name('author.dashboard.');
-
-
-Route::post('/dashboard', [PostDashboardController::class, 'store'])->middleware(['auth', 'verified'])->name('author.dashboard');
-
-Route::get('/dashboard/{post:slug}', [PostDashboardController::class, 'show'])->middleware(['auth', 'verified']);
+Route::middleware(['auth', 'verified'])->group(function () {
+Route::get('/dashboard', [PostDashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/create', [PostDashboardController::class, 'create']);
+Route::post('/dashboard', [PostDashboardController::class, 'store']);
+Route::get('/dashboard/{post:slug}', [PostDashboardController::class, 'show']);
+});
 
 require __DIR__.'/auth.php';
